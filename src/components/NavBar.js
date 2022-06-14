@@ -10,8 +10,11 @@ const NavBar = () => {
         <Container>
           <Navbar.Brand>Book System</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link href="/">Administrator</Nav.Link>
+            <Nav.Link href="/">Books</Nav.Link>
             <Nav.Link href="/">Authors</Nav.Link>
+          </Nav>
+          <Nav>
+            <Nav.Link>Logout</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
