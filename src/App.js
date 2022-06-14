@@ -1,7 +1,8 @@
 import './App.css';
 import * as React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Administrator from './views/Administrator';
+import Books from './views/Books';
+import Book from './views/Book';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AdminLogin from './views/AdminLogin';
 import AuthorLogin from './views/AuthorLogin';
@@ -12,8 +13,9 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<AdminLogin />} />
-          <Route path="/Author" element={<AuthorLogin />} />
-          <Route path="/Home" element={<Administrator />} />
+          <Route path="/author" element={<AuthorLogin />} />
+          <Route path="/home" element={<Books />} />
+          <Route path="/book" element={<Book />} />
         </Routes>
       </BrowserRouter>
     </div>
