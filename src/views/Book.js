@@ -1,27 +1,42 @@
-import React from 'react';
+import * as React from 'react';
 import NavBar from '../components/NavBar';
 import { Button } from 'react-bootstrap';
+import { db } from '../firebase-config';
+import { collection, getDoc, doc } from 'firebase/firestore';
 
 const Book = () => {
+  //book
+  const [book, setBook] = React.useState(['Loading...']);
+  //collection
+  const [booksCollectionRef] = React.useState(collection(db, 'books'));
+
+  //get book on load
+  React.useEffect(() => {
+    const getBook = async () => {
+      const data = await getDoc(doc(db, 'books', 'ZcneE5QbevrGkVu7IWra'));
+
+      setBook(data.data());
+    };
+
+    getBook();
+  }, []);
   return (
     <div>
       <NavBar />
       <div className="d-flex mt-2 mx-3">
         <img
-          src="https://images-na.ssl-images-amazon.com/images/I/916W3jMu+mL.jpg"
+          src={book.cover}
           alt="Carrie"
           style={{ width: '30%', height: '30%', float: 'left' }}
         ></img>
         <div className="mx-2 text-left">
-          <h2>Carrie</h2>
-          <p>by Stephen King on April 4 1974</p>
-          <p>Status: Published</p>
+          <h2>{book.title}</h2>
+          <p>
+            by {book.author} on {book.date}
+          </p>
+          <p>Status: {book.status}</p>
           <p clasname="text-left" style={{ float: 'left' }}>
-            The story of misfit high-school girl, Carrie White, who gradually
-            discovers that she has telekinetic powers. Repressed by a
-            domineering, ultra-religious mother and tormented by her peers at
-            school, her efforts to fit in lead to a dramatic confrontation
-            during the senior prom.{' '}
+            {book.brief}{' '}
           </p>
           <div>
             <Button className="mx-2">Edit</Button>

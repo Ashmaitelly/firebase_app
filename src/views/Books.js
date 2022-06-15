@@ -10,7 +10,7 @@ const Books = () => {
   //books
   const [books, setBooks] = React.useState(['Loading...']);
   //collection
-  const booksCollectionRef = React.useState(collection(db, 'books'));
+  const [booksCollectionRef] = React.useState(collection(db, 'books'));
   //get books on load
   React.useEffect(() => {
     const getBooks = async () => {
@@ -19,8 +19,6 @@ const Books = () => {
     };
 
     getBooks();
-
-    console.log(books);
   });
   return (
     <div>
@@ -29,26 +27,23 @@ const Books = () => {
         gap={3}
         className="d-flex  flex-column justify-content-center mt-2"
       >
-        <Card
-          className="mx-auto d-inline-block text-align-center"
-          style={{ width: '50%', cursor: 'pointer' }}
-          onClick={() => navigate('/book')}
-        >
-          <img
-            src="https://images-na.ssl-images-amazon.com/images/I/916W3jMu+mL.jpg"
-            alt="Carrie"
-            style={{ width: '20%', height: '18%', float: 'left' }}
-          ></img>
-          <h3>Carrie (1974)</h3>
-          <p>By Stephen King </p>
-          <p>
-            The story of misfit high-school girl, Carrie White, who gradually
-            discovers that she has telekinetic powers. Repressed by a
-            domineering, ultra-religious mother and tormented by her peers at
-            school, her efforts to fit in lead to a dramatic confrontation
-            during the senior prom.
-          </p>
-        </Card>
+        {books.map((book) => (
+          <Card
+            key={book.id}
+            className="mx-auto d-inline-block text-align-center"
+            style={{ width: '50%', cursor: 'pointer' }}
+            onClick={() => navigate(`/book?id=${book.id}`)}
+          >
+            <img
+              src={book.cover}
+              alt="cover"
+              style={{ width: '20%', height: '18%', float: 'left' }}
+            ></img>
+            <h3>{`${book.title}`}</h3>
+            <p>By {book.author}</p>
+            <p>{book.brief}</p>
+          </Card>
+        ))}
       </Stack>
     </div>
   );
