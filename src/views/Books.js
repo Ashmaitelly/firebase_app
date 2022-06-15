@@ -8,7 +8,7 @@ import { collection, getDocs } from 'firebase/firestore';
 const Books = () => {
   const navigate = useNavigate();
   //books
-  const [books, setBooks] = React.useState(['Loading...']);
+  const [books, setBooks] = React.useState([]);
   //collection
   const [booksCollectionRef] = React.useState(collection(db, 'books'));
   //get books on load
@@ -36,7 +36,7 @@ const Books = () => {
           >
             <img
               src={book.cover}
-              alt="cover"
+              alt={book.title}
               style={{ width: '20%', height: '18%', float: 'left' }}
             ></img>
             <h3>{`${book.title}`}</h3>
