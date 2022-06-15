@@ -2,14 +2,12 @@ import * as React from 'react';
 import NavBar from '../components/NavBar';
 import { Button } from 'react-bootstrap';
 import { db } from '../firebase-config';
-import { collection, getDoc, doc, deleteDoc } from 'firebase/firestore';
+import { getDoc, doc, deleteDoc } from 'firebase/firestore';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const Book = () => {
   //book
   const [book, setBook] = React.useState([]);
-  //collection
-  const [booksCollectionRef] = React.useState(collection(db, 'books'));
   //navigate
   const navigate = useNavigate();
   //url params
@@ -23,7 +21,7 @@ const Book = () => {
     };
 
     getBook();
-  }, []);
+  }, [searchParams]);
   //delet book
   const deleteBook = (id) => {
     const bookDoc = doc(db, 'books', id);
@@ -49,17 +47,20 @@ const Book = () => {
           <p clasname="text-left" style={{ float: 'left' }}>
             {book.brief}{' '}
           </p>
-          <div>
-            <Button className="mx-2">Edit</Button>
-            <Button
-              variant="danger"
-              onClick={() => {
-                deleteBook(searchParams.get('id'));
-              }}
-            >
-              Delete
-            </Button>
-          </div>
+
+          {localStorage.getItem('isAdmin') && (
+            <div>
+              <Button className="mx-2">Edit</Button>
+              <Button
+                variant="danger"
+                onClick={() => {
+                  deleteBook(searchParams.get('id'));
+                }}
+              >
+                Delete
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     </div>
