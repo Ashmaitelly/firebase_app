@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth, db } from '../firebase-config';
-import { getDoc, doc, deleteDoc } from 'firebase/firestore';
+import { getDoc, doc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 
 const AuthorLogin = () => {

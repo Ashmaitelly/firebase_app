@@ -48,7 +48,8 @@ const Book = () => {
             {book.brief}{' '}
           </p>
 
-          {localStorage.getItem('isAdmin') && (
+          {(localStorage.getItem('isAdmin') ||
+            localStorage.getItem('authName') === book.author) && (
             <div>
               <Button className="mx-2">Edit</Button>
               <Button
