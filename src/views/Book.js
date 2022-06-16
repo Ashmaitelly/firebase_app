@@ -41,7 +41,8 @@ const Book = () => {
         <div className="mx-2 text-left">
           <h2>{book.title}</h2>
           <p>
-            by {book.author} on {book.date}
+            by <a href={`/home?author=${book.author}`}>{book.author}</a> on{' '}
+            {book.date}
           </p>
           <p>Status: {book.status}</p>
           <p clasname="text-left" style={{ float: 'left' }}>

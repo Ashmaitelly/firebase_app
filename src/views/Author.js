@@ -1,8 +1,34 @@
 import * as React from 'react';
 import NavBar from '../components/NavBar';
 import { Button, Form } from 'react-bootstrap';
+import { db } from '../firebase-config';
+import { collection, addDoc } from 'firebase/firestore';
+import { useNavigate } from 'react-router-dom';
 
 const Author = () => {
+  const navigate = useNavigate();
+  //collection
+  const [booksCollectionRef] = React.useState(collection(db, 'books'));
+  //fields to add
+  const [title, setTitle] = React.useState('');
+  const [cover, setCover] = React.useState('');
+  const [brief, setBrief] = React.useState('');
+  //
+  const createBook = async () => {
+    try {
+      await addDoc(booksCollectionRef, {
+        title: title,
+        cover: cover,
+        brief: brief,
+        status: 'Published',
+        author: localStorage.getItem('authName'),
+        date: new Date(Date.now()).toLocaleString().split(',')[0],
+      });
+      navigate('/home');
+    } catch (error) {
+      alert(error.message);
+    }
+  };
   return (
     <div>
       <NavBar />
@@ -13,9 +39,9 @@ const Author = () => {
             <Form.Control
               type="text"
               placeholder="Title"
-              // onChange={(event) => {
-              //   setLoginEmail(event.target.value);
-              // }}
+              onChange={(event) => {
+                setTitle(event.target.value);
+              }}
             />
           </Form.Group>
 
@@ -23,14 +49,21 @@ const Author = () => {
             <Form.Control
               type="text"
               placeholder="Cover link"
-              // onChange={(event) => {
-              //   setLoginEmail(event.target.value);
-              // }}
+              onChange={(event) => {
+                setCover(event.target.value);
+              }}
             />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-            <Form.Control as="textarea" rows={3} placeholder="Brief" />
+            <Form.Control
+              as="textarea"
+              rows={3}
+              placeholder="Brief"
+              onChange={(event) => {
+                setBrief(event.target.value);
+              }}
+            />
           </Form.Group>
 
           <Button
@@ -39,7 +72,7 @@ const Author = () => {
             className="mb-4"
             onClick={(e) => {
               e.preventDefault();
-              // login();
+              createBook();
             }}
           >
             Add book

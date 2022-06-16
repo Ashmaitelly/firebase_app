@@ -25,7 +25,7 @@ const NavBar = () => {
             {localStorage.getItem('isAdmin') ? (
               ''
             ) : (
-              <Nav.Link href="/author">Authors</Nav.Link>
+              <Nav.Link href="/author">Add book</Nav.Link>
             )}
           </Nav>
           <Nav>
